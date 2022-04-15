@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            .wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                line-height: calc(50vw/8);
+                border: 1px solid;
+            }
+            body{
+                text-align: center;
+                font-size: 40px;
+            }
+            .divCase{
+                position: relative;
+                transform: scale(100%,100%);
+                transition: .4s;
+            }
+            .divCase:hover{
+                z-index: 1;
+                transform: scale(120%,120%);
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            //classes
+            class Chess {
+                CHESS = [];
+                constructor() {}
+                createChess(){
+                    for (let y = 0; y < 8; ++y) {
+                        switch (y) {
+                            case 0:
+                                this.CHESS.push(['♜', '♞', '♝', '♚', '♛', '♝', '♞', '♜']);
+                                break;
+                            case 7:
+                                this.CHESS.push(['♖', '♘', '♗', '♔', '♕', '♗', '♘', '♖']);
+                                break;
+                            case 1:
+                                this.CHESS.push(['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟']);
+                                break;
+                            case 6:
+                                this.CHESS.push(['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙']);
+                                break;
+                            default:
+                                this.CHESS.push([null, null, null, null, null, null, null, null]);
+                        }
+                    }
+                }
+                displayChess(CHESS){
+                    let case_color = true;
+                    let plato = '<div class="wrapper">';
+                    for (let y = 0; y < CHESS.length; ++y) {
+                        for (let x = 0; x < CHESS[y].length; ++x) {
+                            if (case_color) {
+                                plato += '<div class="divCase" style="background-color: #ffffff;border: solid .05em black;box-shadow: inset 0 0 15px 0 rgb(0,0,0, .99);">';
+                                case_color = false;
+                            } else {
+                                plato += '<div class="divCase" style="background-color: #ffffff;border: solid .05em black;box-shadow: inset 0 0 15px 0 rgb(255,255,255, .5);">';
+                                case_color = true;
+                            }
+                            if (CHESS[y][x] != null) {
+                                if (y === 0 || y === 1 || y === 6 || y === 7) {
+                                    plato += CHESS[y][x];
+                                }
+                            } else {
+                                plato += '<div style="opacity: 0;">♙</div>';
+                            }
+                            plato += '</div>';
+                        }
+                        case_color = !case_color;
+                    }
+                    plato += '</div>';
+                    document.body.innerHTML = plato;
+                }
+            }
+            let chess = new Chess();
+            chess.createChess();
+            chess.displayChess(chess.CHESS);
+        </script>
+    </body>
+</html>
